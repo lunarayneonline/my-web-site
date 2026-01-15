@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proceed</title>
+    <style>
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; text-align: center; background-color: #f0f2f5; padding: 20px; -webkit-tap-highlight-color: transparent; }
+        .container { background-color: white; padding: 30px 40px; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+        #message { font-size: 18px; color: #333; line-height: 1.6; }
+        /* Стилизуем обычный div как кнопку */
+        #action-div {
+            display: none; /* Изначально скрыт */
+            padding: 15px 30px;
+            margin-top: 20px;
+            font-size: 20px;
+            color: white;
+            background-color: #007bff;
+            border-radius: 8px;
+            cursor: pointer;
+            user-select: none; /* Чтобы текст не выделялся при клике */
+            transition: background-color 0.3s;
+        }
+        #action-div:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="message">
+            <!-- Сообщение будет вставлено с помощью JS -->
+        </div>
+        <!-- Используем div вместо button, чтобы обмануть простых ботов -->
+        <div id="action-div">Continue</div>
+    </div>
+
+    <script>
+        // Функция для перехода с более сложной обфускацией
+        function goToTarget() {
+            // *** ВАША ССЫЛКА РАЗБИТА НА ЧАСТИ ***
+            const urlParts = ['https', ':', '//fanvue.com', '/itslunarayne']; 
+            // Собираем ссылку воедино
+            const targetUrl = urlParts.join('');
+            
+            // Небольшая задержка перед редиректом
+            setTimeout(function() {
+                window.location.href = targetUrl;
+            }, 100);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const isTikTok = userAgent.includes('tiktok');
+
+            const messageElement = document.getElementById('message');
+            const actionDiv = document.getElementById('action-div');
+
+            if (isTikTok) {
+                messageElement.innerHTML = '<p>To continue, please open this page in an external browser.</p><p>Tap the <strong>three dots in the top right</strong> and select "Open in browser".</p>';
+            } else {
+                messageElement.innerHTML = '<p>Click below to proceed.</p>';
+                actionDiv.style.display = 'block'; // Показываем нашу "кнопку"
+                // Назначаем переход по клику на div
+                actionDiv.addEventListener('click', goToTarget);
+            }
+        });
+    </script>
+
+</body>
+</html>
