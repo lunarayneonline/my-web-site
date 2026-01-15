@@ -1,28 +1,50 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Диагностика браузера</title>
+    <title>Proceed</title>
     <style>
-        body { margin: 20px; font-family: monospace; font-size: 14px; word-break: break-all; background-color: #f0f2f5;}
-        h1 { font-family: sans-serif; color: #333; }
-        p { font-family: sans-serif; }
-        #diagnostic-box { background-color: white; padding: 15px; border: 1px solid #ccc; border-radius: 8px; margin-top: 10px; }
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; text-align: center; background-color: #f0f2f5; padding: 20px; -webkit-tap-highlight-color: transparent; }
+        .container { background-color: white; padding: 30px 40px; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+        #message { font-size: 18px; color: #333; line-height: 1.6; }
+        #action-div { display: none; padding: 15px 30px; margin-top: 20px; font-size: 20px; color: white; background-color: #007bff; border-radius: 8px; cursor: pointer; user-select: none; transition: background-color 0.3s; }
+        #action-div:hover { background-color: #0056b3; }
     </style>
 </head>
 <body>
-    <h1>Идентификатор вашего браузера</h1>
-    <p>Чтобы я мог исправить скрипт, пожалуйста, выполните 3 действия:</p>
-    <ol>
-        <li>Откройте эту страницу в TikTok.</li>
-        <li>Скопируйте <strong>весь</strong> текст, который появится в белом поле ниже.</li>
-        <li>Отправьте этот текст мне в следующем сообщении.</li>
-    </ol>
-    <hr>
-    <div id="diagnostic-box"></div>
+    <div class="container">
+        <div id="message"></div>
+        <div id="action-div">Continue</div>
+    </div>
+
     <script>
-        document.getElementById('diagnostic-box').textContent = navigator.userAgent;
+        function goToTarget() {
+            // IMPORTANT: Edit this array with your link parts.
+            const urlParts = ['https', ':', '//fanvue.com', '/itslunarayne'];
+            const targetUrl = urlParts.join('');
+            setTimeout(() => { window.location.href = targetUrl; }, 100);
+        }
+
+        // Final function built from your data
+        function isTikTokBrowser() {
+            const ua = navigator.userAgent.toLowerCase();
+            // Looking for 'musical_ly' or 'bytedance', which are in your user agent string
+            return ua.includes('musical_ly') || ua.includes('bytedance');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const messageElement = document.getElementById('message');
+            const actionDiv = document.getElementById('action-div');
+
+            if (isTikTokBrowser()) {
+                messageElement.innerHTML = '<p>To continue, please open this page in your web browser.</p><p>Tap the <strong>options menu (⋯)</strong> and select "Open in Browser".</p>';
+            } else {
+                messageElement.innerHTML = '<p>Click below to proceed.</p>';
+                actionDiv.style.display = 'block';
+                actionDiv.addEventListener('click', goToTarget);
+            }
+        });
     </script>
 </body>
 </html>
